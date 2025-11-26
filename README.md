@@ -53,6 +53,24 @@ What `e2e` does:
 - Starts the server using `PORT=3001` so it won't conflict with a locally running instance.
 - Waits until `http://localhost:3001` responds and then runs `cypress:run` headless.
 
+Testing modes
+
+- Local interactive testing (recommended for development):
+
+```sh
+npm start           # run the app (real external APIs)
+npm run cypress:open
+```
+
+- Deterministic test runs (fixtures in Cypress): the `wizard` spec stubs external APIs using fixtures in `cypress/fixtures`. This makes interactive and CI tests deterministic and not dependent on external network.
+
+- CI-friendly e2e with server-side fallback: if your CI environment cannot reach external APIs, use the `e2e:ci` script which starts the server with `MOCK_EXTERNAL=1` and runs the headless suite.
+
+```sh
+npm run e2e           # start server and run tests using the real server (no server-side mocks)
+npm run e2e:ci        # CI-friendly - server will use internal mock responses if external APIs fail
+```
+
 Notes
 
 - Videos for each spec are saved to `cypress/videos/`.

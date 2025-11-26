@@ -9,8 +9,10 @@
     "cypress:open": "cypress open --project .",
     "cypress:run": "cypress run --project .",
     "cypress:run:timestamp": "node scripts/run-cypress-timestamped.js",
-    "e2e": "start-server-and-test \"cross-env PORT=3001 npm start\" http://localhost:3001 cypress:run",
-    "e2e:timestamp": "start-server-and-test \"cross-env PORT=3001 npm start\" http://localhost:3001 cypress:run:timestamp"
+    "e2e": "start-server-and-test \"cross-env PORT=3000 npm start\" http://localhost:3000 cypress:run",
+    "e2e:timestamp": "start-server-and-test \"cross-env PORT=3000 npm start\" http://localhost:3000 cypress:run:timestamp",
+    "e2e:ci": "start-server-and-test \"cross-env MOCK_EXTERNAL=1 PORT=3000 npm start\" http://localhost:3000 cypress:run",
+    "e2e:ci:timestamp": "start-server-and-test \"cross-env MOCK_EXTERNAL=1 PORT=3000 npm start\" http://localhost:3000 cypress:run:timestamp"
   },
   "dependencies": {
     "express": "^4.18.2",

@@ -48,9 +48,23 @@ app.get("/api/geocode", async (req, res) => {
   const name = req.query.name || "";
   if (!name) return res.status(400).json({ error: "missing name" });
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=5`;
-  const r = await fetch(url);
-  const j = await r.json();
-  res.json(j);
+  try {
+    const r = await fetch(url);
+    const j = await r.json();
+    res.json(j);
+  } catch (err) {
+    console.error("geocode fetch failed:", err && err.message ? err.message : err);
+    if (process.env.MOCK_EXTERNAL) {
+      const mock = {
+        results: [
+          { name: "London", country: "United Kingdom", latitude: 51.5072, longitude: -0.1276 },
+          { name: "Adelaide", country: "Australia", latitude: -34.9285, longitude: 138.6007 },
+        ],
+      };
+      return res.json(mock);
+    }
+    res.status(502).json({ error: "geocode_unavailable" });
+  }
 });
 
 app.get("/api/weather", async (req, res) => {
@@ -59,9 +73,25 @@ app.get("/api/weather", async (req, res) => {
   const start = date || new Date().toISOString().slice(0, 10);
   const end = start;
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&start_date=${start}&end_date=${end}&timezone=UTC`;
-  const r = await fetch(url);
-  const j = await r.json();
-  res.json(j);
+  try {
+    const r = await fetch(url);
+    const j = await r.json();
+    res.json(j);
+  } catch (err) {
+    console.error("weather fetch failed:", err && err.message ? err.message : err);
+    if (process.env.MOCK_EXTERNAL) {
+      const mock = {
+        latitude: lat,
+        longitude: lon,
+        daily: {
+          temperature_2m_max: [22],
+          temperature_2m_min: [12],
+        },
+      };
+      return res.json(mock);
+    }
+    res.status(502).json({ error: "weather_unavailable" });
+  }
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -1,0 +1,6 @@
+{
+  "results": [
+    { "name": "London", "country": "United Kingdom", "latitude": 51.5072, "longitude": -0.1276 },
+    { "name": "Adelaide", "country": "Australia", "latitude": -34.9285, "longitude": 138.6007 }
+  ]
+}
