@@ -1,0 +1,28 @@
+{
+  "name": "cypress-wizard-poc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node app/server.js",
+    "dev": "nodemon app/server.js --watch app --ext js",
+    "cypress:open": "cypress open --project .",
+    "cypress:run": "cypress run --project .",
+    "cypress:run:timestamp": "node scripts/run-cypress-timestamped.js",
+    "e2e": "start-server-and-test \"cross-env PORT=3001 npm start\" http://localhost:3001 cypress:run",
+    "e2e:timestamp": "start-server-and-test \"cross-env PORT=3001 npm start\" http://localhost:3001 cypress:run:timestamp"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.4",
+    "node-fetch": "^3.3.2",
+    "sqlite": "^4.0.25",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "cypress": "^12.17.0",
+    "nodemon": "^2.0.22",
+    "start-server-and-test": "^1.14.0",
+    "cross-env": "^7.0.3"
+  }
+}
