@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node app/server.js",
-    "dev": "nodemon app/server.js --watch app --ext js",
+    "dev": "cross-env NODE_OPTIONS=--dns-result-order=ipv4first nodemon app/server.js --watch app --ext js",
     "cypress:open": "cypress open --project .",
     "cypress:run": "cypress run --project .",
     "cypress:run:timestamp": "node scripts/run-cypress-timestamped.js",
